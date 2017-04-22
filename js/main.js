@@ -34,7 +34,7 @@
 						html += '<tr>';
 					}
 					
-					html += '<td>' + date.showDate + '</td>';
+					html += '<td data-date = "' + date.date + '">' + date.showDate + '</td>';
 					
 					//为每周最后一天加tr结束标签		i%7为6是最后一天
 					if (i%7 === 6) {
@@ -45,6 +45,7 @@
 				html +=	'</tbody>' +
 				'</table>' +
 			'</div>'
+
 			
 			return html;
 	};
@@ -65,12 +66,16 @@
 		}
 		
 		var html = datepicker.buildUi(year, month);
+		
 //		document.body.innerHTML = html;
 //		<div class="ui-datepicker-wrapper">
-		$warpper = document.createElement('div');
-		$warpper.className = 'ui-datepicker-wrapper';
+		var $wrapper = document.querySelector('.ui-datepicker-wrapper');
+		if (!$warpper){
+			$warpper = document.createElement('div');
+			document.body.appendChild($warpper);
+			$warpper.className = 'ui-datepicker-wrapper';
+		}
 		$warpper.innerHTML = html;
-		document.body.appendChild($warpper);
 	};
 	
 	datepicker.init = function (input) {
@@ -110,8 +115,38 @@
 				datepicker.render('next');
 			}
 			
-				
-		},false)
+		},false);
+		
+		$warpper.addEventListener('click', function(e) {
+			var $target = e.target;
+			if($target.tagName.toLowerCase() !== 'td') return;
+			
+			var date = new Date(monthData.year, monthData.month - 1, $target.dataset.date);
+			
+			$input.value = format(date);
+			
+		})
+		
 	};
 
+	function format(date) {
+		ret = '';
+		
+		var padding = function (num) {
+			if(num <= 9) {
+				return num;
+			}
+		}
+		
+		ret += date.getFullYear() + '-'; 
+		
+		ret += padding(date.getMonth() + 1) + '-';
+		
+		ret += padding(date.getDate());
+		
+		$warpper.classList.remove('ui-datepicker-wrapper-show');
+
+		
+		return ret;
+	}
 })();
