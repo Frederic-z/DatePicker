@@ -47,7 +47,7 @@
 			return html;
 	};
 	
-	datepicker.init = function ($input) {
+	datepicker.init = function (input) {
 		var html = datepicker.buildUi();
 //		document.body.innerHTML = html;
 //		<div class="ui-datepicker-wrapper">
@@ -56,6 +56,26 @@
 		$warpper.innerHTML = html;
 		
 		document.body.appendChild($warpper);
+		
+		var $input = document.querySelector(input);
+		var isOpen = false;
+		
+		//为input添加事件
+		$input.addEventListener('click', function() {
+			//如果isOpen把日历的class拿掉 
+			if (isOpen) {
+				$warpper.classList.remove('ui-datepicker-wrapper-show');
+				isOpen = false;
+			} else {
+				$warpper.classList.add('ui-datepicker-wrapper-show');
+				var left = $input.offsetLeft;
+				var top = $input.offsetTop;
+				var height = $input.offsetHeight;
+				$warpper.style.top = top + height + 2 + 'px';
+				$warpper.style.left = left + 'px';
+				isOpen = true;
+			}
+		}, false)
 	}
 	
 	
