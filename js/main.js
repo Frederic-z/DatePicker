@@ -2,9 +2,11 @@
 	
 	var datepicker = window.datepicker;
 	//	为datepicker添加一个buildUi方法
+	var monthData;
+	var $warpper;
 	datepicker.buildUi = function(year, month) {
 		//	获取本月数据
-		var monthData = datepicker.getMonthDate(year, month);
+		monthData = datepicker.getMonthDate(year, month);
 		var html = '<div class="ui-datepicker-header">' +
 				'<a href="#" class="ui-datepicker-btn ui-datepicker-prev-btn">&lt;</a>' +
 				'<a href="#" class="ui-datepicker-btn ui-datepicker-next-btn">&gt;</a>' +
@@ -47,21 +49,39 @@
 			return html;
 	};
 	
-	datepicker.init = function (input) {
-		var html = datepicker.buildUi();
+	datepicker.render = function (direction) {
+		
+		var year, month;
+		if (monthData){
+			var year =monthData.year;
+			var month = monthData.month;
+		}
+		if (direction === 'prev') {
+			month--;
+		}
+		
+		if (direction === 'next') {
+			month++;
+		}
+		
+		var html = datepicker.buildUi(year, month);
 //		document.body.innerHTML = html;
 //		<div class="ui-datepicker-wrapper">
-		var $warpper = document.createElement('div');
+		$warpper = document.createElement('div');
 		$warpper.className = 'ui-datepicker-wrapper';
 		$warpper.innerHTML = html;
-		
 		document.body.appendChild($warpper);
+	};
+	
+	datepicker.init = function (input) {
+		datepicker.render();
 		
 		var $input = document.querySelector(input);
 		var isOpen = false;
 		
 		//为input添加事件
 		$input.addEventListener('click', function() {
+			
 			//如果isOpen把日历的class拿掉 
 			if (isOpen) {
 				$warpper.classList.remove('ui-datepicker-wrapper-show');
@@ -75,12 +95,23 @@
 				$warpper.style.left = left + 'px';
 				isOpen = true;
 			}
-		}, false)
-	}
+		}, false);
+		
+		$warpper.addEventListener('click', function(e) {
+			var $target = e.target;
 	
-	
-	
-	
-	
-	
+			if (!$target.classList.contains('ui-datepicker-btn')){
+				return;
+			}
+			//上一月
+			if ($target.classList.contains('ui-datepicker-prev-btn')) {
+				datepicker.render('prev');
+			} else if ($target.classList.contains('ui-datepicker-next-btn')) {
+				datepicker.render('next');
+			}
+			
+				
+		},false)
+	};
+
 })();
