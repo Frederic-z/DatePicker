@@ -31,7 +31,6 @@
 		//当月的最后一天	下个月的第0天是这个月的最后一天
 		var lastDay = new Date(year, month, 0);
 		var lastDate = lastDay.getDate();
-		console.log(lastDay)
 		//获取当月的每一天
 		for(var i=0; i<7*6; i++) {
 			var date = i + 1 - preMonthDayCount;
@@ -44,7 +43,7 @@
 			} else if (date > lastDate) {
 				//下一月
 				thisMonth = month + 1;
-				showDate = showDate - lastDate;
+				showDate = date - lastDate;
 			}
 			
 //			if (thisMonth === 0) {
