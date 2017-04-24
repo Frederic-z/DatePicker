@@ -45,6 +45,7 @@
 						 * date.date为负是上个月
 						 * date.date大于这个月的天数是下个月
 						 **/
+						
 						html += '<td data-date = "'+date.date +'">' + date.showDate + '</td>';
 						
 						if (i % 7 === 6) {
@@ -61,7 +62,7 @@
 	
 	};
 	
-	datepicker.render = function(direction) {
+	datepicker.render = function(direction, label) {
 			
 			var year, month;
 			if (monthDate) {
@@ -84,9 +85,8 @@
 				$wrapper.className = 'ui-datepicker-wrapper';
 				document.body.appendChild($wrapper);
 			};
-	
+			
 			$wrapper.innerHTML = html;
-
 		};
 		
 	
@@ -139,21 +139,42 @@
 				return;
 			} else{
 				var date = new Date(monthDate.year, monthDate.month - 1, $target.dataset.date);
+				
 			}
 			
+//			if ($target.dataset.date <= 0) {
+//				datepicker.render('prev');
+//			}
+//			
+//			if($target.dataset.date > monthDate.lastDate) {
+//				
+//				datepicker.render('next');
+//			}
+//			
+			
+			$target.style.background = '#999';
 			$input.value = fotmat(date);
 			
 		}, false);
 
 		
-		datepicker.fotmat = function (date) {
+		function fotmat(date) {
 			
-			var ret = [];
+			var ret = '';
 			
+			function padding(num) {
+				
+				if (num <= 9) {
+					num = '0' + num;				
+				}
+				return num;
+			}
 			
-			
+			ret += date.getFullYear() + '-';
+			ret += padding(date.getMonth() + 1) + '-';
+			ret += padding(date.getDate());
+			return ret;
 		}
-	
 	
 	};
 

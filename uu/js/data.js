@@ -66,13 +66,14 @@
 			ret.push({
 				month: thisMonth,
 				date: date,
-				showDate: showDate
+				showDate: showDate,
 			});
 		}
 		return {
 			year: year,
 			month: month,
-			days: ret
+			days: ret,
+			lastDate: lastDate
 		};
 	}
 

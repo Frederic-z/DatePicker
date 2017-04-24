@@ -6,7 +6,7 @@
 	var $warpper;
 	datepicker.buildUi = function(year, month) {
 		//	获取本月数据
-		monthData = datepicker.getMonthDate(year, month);
+		monthData = datepicker.getMonthData(year, month);
 		var html = '<div class="ui-datepicker-header">' +
 				'<a href="#" class="ui-datepicker-btn ui-datepicker-prev-btn">&lt;</a>' +
 				'<a href="#" class="ui-datepicker-btn ui-datepicker-next-btn">&gt;</a>' +
