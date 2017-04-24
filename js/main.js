@@ -39,7 +39,6 @@
 					//为每周最后一天加tr结束标签		i%7为6是最后一天
 					if (i%7 === 6) {
 						html += '</tr>';
-						alert(i);
 					}
 				}
 		
@@ -73,9 +72,10 @@
 		var $wrapper = document.querySelector('.ui-datepicker-wrapper');
 		if (!$warpper){
 			$warpper = document.createElement('div');
-			document.body.appendChild($warpper);
 			$warpper.className = 'ui-datepicker-wrapper';
+			document.body.appendChild($warpper);
 		}
+		console.log($warpper);
 		$warpper.innerHTML = html;
 	};
 	
