@@ -141,16 +141,17 @@
 				var date = new Date(monthDate.year, monthDate.month - 1, $target.dataset.date);
 				
 			}
+			// $target.getAttribute('data-date')
+				
+			if ($target.dataset.date <= 0) {
+				datepicker.render('prev');
+			}
 			
-//			if ($target.dataset.date <= 0) {
-//				datepicker.render('prev');
-//			}
-//			
-//			if($target.dataset.date > monthDate.lastDate) {
-//				
-//				datepicker.render('next');
-//			}
-//			
+			if($target.dataset.date > monthDate.lastDate) {
+				
+				datepicker.render('next');
+			}
+			
 			
 			$target.style.background = '#999';
 			$input.value = fotmat(date);
